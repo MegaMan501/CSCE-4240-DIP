@@ -1,6 +1,6 @@
 # CSCE-4240-DIP
-Introduction to algorithms, mathematical tools, and various digital image applications. Gray level and
-multispectral image manipulation will be discussed.
+Introduction to algorithms, mathematical tools, and various digital image applications, gray level and
+multispectral image manipulation.
 
 ## Projects 
 - [ ] Snakes1U: Take a given image and make a snaking contour on image. 
