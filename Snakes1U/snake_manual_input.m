@@ -1,4 +1,4 @@
-function [x, y] = snake_manual_input(f, np, style)
+function [x, y] = snake_manual_input(f, np, style, fileName)
 %SNAKE_MANUAL_INPUT Manual input of initial snake.
 %   [X, Y] = SNAKE_MANUAL_INPUT(F, NP, STYLE) generates the (x,y)
 %   coordinates on an np-point initial snake for a region of image
@@ -44,8 +44,7 @@ figure, imshow(f)
 
 % Get points interactively. Function myginput is a 3rd-party
 % function included in the book support package.
-% [c, r] = myginput; 
-[c, r] = ginputc; 
+[c, r] = ginputc('ShowPoints', true, 'ConnectPoints', true); % [c, r] = myginput; 
 x = r;
 y = c;
 
@@ -69,5 +68,6 @@ close gcf
 % Display the figure with the snake supoperimposed on it.
 figure, imshow(f)
 hold on
-plot(y, x, style)
+snake_display(x, y, style) %plot(y, x, style)
+saveas(gcf, fileName,'tif'); %Save the contour of image 
 hold off
