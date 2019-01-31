@@ -1,4 +1,8 @@
 function [x, y] = snake_manual_input(f, np, style, fileName)
+% Group Members: Mohamed Rahaman, Eric Nwokocha
+% CSCE-4240 Digital Image Processing
+% January 31, 2019
+%
 %SNAKE_MANUAL_INPUT Manual input of initial snake.
 %   [X, Y] = SNAKE_MANUAL_INPUT(F, NP, STYLE) generates the (x,y)
 %   coordinates on an np-point initial snake for a region of image
@@ -6,15 +10,15 @@ function [x, y] = snake_manual_input(f, np, style, fileName)
 %   generates points in between the vertices so that the snake has
 %   NP equally-spaced points. When the function is called, it
 %   outputs the instructions for inputting the vertices. The
-%   snake coordinates, [x, y] form a closed polygon. 
+%   snake coordinates, [x, y] form a closed polygon.
 %
 %   STYLE is a character string made from one element from any or
 %   all the following 3 columns:
 %
 %            b     blue          .     point           -     solid
 %            g     green         o     circle          :     dotted
-%            r     red           x     x-mark          -.    dashdot 
-%            c     cyan          +     plus            --    dashed   
+%            r     red           x     x-mark          -.    dashdot
+%            c     cyan          +     plus            --    dashed
 %            m     magenta       *     star          (none)  no line
 %            y     yellow        s     square
 %            k     black         d     diamond
@@ -24,7 +28,7 @@ function [x, y] = snake_manual_input(f, np, style, fileName)
 %                                >     triangle (right)
 %                                p     pentagram
 %                                h     hexagram
-%                           
+%
 %
 %   Thus, a symbol from the first column gives the color, the second
 %   is the symbol used in the plot, and the third specifies the type
@@ -44,7 +48,7 @@ figure, imshow(f)
 
 % Get points interactively. Function myginput is a 3rd-party
 % function included in the book support package.
-[c, r] = ginputc('ShowPoints', true, 'ConnectPoints', true); % [c, r] = myginput; 
+[c, r] = ginputc('ShowPoints', true, 'ConnectPoints', true); % [c, r] = myginput;
 x = r;
 y = c;
 
@@ -56,10 +60,10 @@ y(numel(y) + 1) = y(1);
 % points. Note the order in which x and y are input. Function
 % interparc is a 3rd-party function included in the book support
 % package.
-p = interparc(np, y, x, 'linear'); 
+p = interparc(np, y, x, 'linear');
 % Remember: In the book, (x, y) = (r, c) but interparc outputs
 % values as (c, r);
-x = p(:,2); 
+x = p(:,2);
 y = p(:,1);
 
 % Close the current figure.
@@ -69,5 +73,5 @@ close gcf
 figure, imshow(f)
 hold on
 snake_display(x, y, style) %plot(y, x, style)
-saveas(gcf, fileName,'tif'); %Save the contour of image 
+saveas(gcf, fullfile(pwd,fileName),'tif'); %Save the contour of image
 hold off
