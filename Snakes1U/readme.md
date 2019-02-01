@@ -12,3 +12,8 @@ next run `main` function.
   PRESS RETURN TO TERMINATE DATA ENTRY.
 
   ```
+![Step1](https://github.com/MegaMan501/CSCE-4240-DIP/blob/master/Snakes1U/Screenshot%20from%202019-02-01%2015-58-51.png)
+
+At the output should look like this. 
+
+![Step2](https://github.com/MegaMan501/CSCE-4240-DIP/blob/master/Snakes1U/Screenshot%20from%202019-02-01%2016-02-58.png)
