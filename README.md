@@ -3,7 +3,7 @@ Introduction to algorithms, mathematical tools, and various digital image applic
 multispectral image manipulation.
 
 ## Projects 
-- [ ] Snakes1U: Take a given image and make a snaking contour on image. 
+- [x] Snakes1U: Take a given image and make a snaking contour on image. 
 
 ## Team 11
 - Eric Nwokocha
