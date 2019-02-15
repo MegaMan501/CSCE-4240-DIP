@@ -1,0 +1,16 @@
+function T = outsuThresh4e(f, t)
+%OUTSUTHRESH4E Summary of this function goes here
+%   Detailed explanation goes here
+
+    if ischar(t) && t == "auto"
+        I = imread(f); 
+        [counts,x] = imhist(I,32); 
+        stem(x,counts); 
+        T = otsuthresh(counts); 
+    else 
+        T
+    end 
+    
+    disp(T); 
+end
+
