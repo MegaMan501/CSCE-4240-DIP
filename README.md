@@ -4,6 +4,7 @@ multispectral image manipulation.
 
 ## Projects 
 - [x] Snakes1U: Take a given image and make a snaking contour on image. 
+- [x] ProjectSecondPhase(UG): Produce EMAPs of a given image 
 
 ## Team 11
 - Eric Nwokocha
