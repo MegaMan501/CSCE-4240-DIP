@@ -34,7 +34,7 @@ function EMAP = snakeMap4e(f, varargin)
         thresF=0.5;    % set the threshold factor
         
         % Check for auto keyword
-        if ischar(t) && t == "auto" 
+        if ischar(t) && strcmp(t, 'auto') == 1
             [~, t] = edge(I, 'sobel');
         end
         
@@ -56,7 +56,7 @@ function EMAP = snakeMap4e(f, varargin)
         order=varargin{4}; % set the order type
         
         % Check for auto keyword
-        if ischar(t) && t == "auto" 
+        if ischar(t) == 1 && strcmp(t, 'auto') == 1 
             [~, t] = edge(I, 'sobel');
         end 
         
@@ -66,26 +66,26 @@ function EMAP = snakeMap4e(f, varargin)
         end
         
         % Blur Logic (before, after, both, or none)
-        if order == "before" 
+        if strcmp(order,'before') == 1
             H = fspecial('gaussian', [floor(nsig*sig) floor(nsig*sig)], sig);  
             I = imfilter(I, H, 'same'); 
             Gmag = imgradient(I, 'sobel'); 
             EMAP = edge(I, 'sobel',t * thresF); 
             
-        elseif order == "after" 
+        elseif strcmp(order, 'after') == 1
             H = fspecial('gaussian', [floor(nsig*sig) floor(nsig*sig)], sig);
             Gmag = imgradient(I, 'sobel'); 
             EMAP = edge(I, 'sobel',t * thresF);  
             I = imfilter(I, H, 'same'); 
             
-        elseif order == "both"
+        elseif strcmp(order,'both') == 1
             H = fspecial('gaussian', [floor(nsig*sig) floor(nsig*sig)], sig);
             I = imfilter(I, H, 'same'); 
             Gmag = imgradient(I, 'sobel'); 
             EMAP = edge(I, 'sobel',t * thresF);
             I = imfilter(I, H, 'same'); 
             
-        elseif order == "none"
+        elseif strcmp(order, 'none') == 1
             Gmag = imgradient(I, 'sobel'); 
             EMAP = edge(I, 'sobel',t * thresF);  
              

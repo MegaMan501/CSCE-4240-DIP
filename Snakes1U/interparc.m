@@ -39,7 +39,7 @@ function [pt,dudt,fofthandle] = interparc(t,px,py,varargin)
 %        method may be any of 'linear', 'spline', or 'pchip',
 %        or any simple contraction thereof, such as 'lin',
 %        'sp', or even 'p'.
-%        
+%
 %        method == 'linear' --> Uses a linear chordal
 %               approximation to interpolate the curve.
 %               This method is the most efficient.
@@ -57,7 +57,7 @@ function [pt,dudt,fofthandle] = interparc(t,px,py,varargin)
 %               allow a periodic spline fit for closed curves.
 %               ONLY use this method if your points should
 %               represent a closed curve.
-%               
+%
 %               If the last point is NOT the same as the
 %               first point on the curve, then the curve
 %               will be forced to be periodic by this option.
@@ -204,7 +204,7 @@ if nargin > 3
   if ischar(varargin{end})
     method = varargin{end};
     varargin(end) = [];
-    
+
     % method may be any of {'linear', 'pchip', 'spline', 'csape'.}
     % any any simple contraction thereof.
     valid = {'linear', 'pchip', 'spline', 'csape'};
@@ -213,7 +213,7 @@ if nargin > 3
       error('INTERPARC:incorrectmethod',errstr)
     end
   end
-  
+
   % anything that remains in varargin must add
   % an additional dimension on the curve/polygon
   for i = 1:numel(varargin)
@@ -225,7 +225,7 @@ if nargin > 3
     end
     pxy = [pxy,pz]; %#ok
   end
-  
+
   % the final number of dimensions provided
   ndim = size(pxy,2);
 end
@@ -236,10 +236,10 @@ if method(1) == 'c'
   if exist('csape','file') == 0
     error('CSAPE was requested, but you lack the necessary toolbox.')
   end
-  
+
   p1 = pxy(1,:);
   pend = pxy(end,:);
-  
+
   % get a tolerance on whether the first point is replicated.
   if norm(p1 - pend) > 10*eps(norm(max(abs(pxy),[],1)))
     % the two end points were not identical, so wrap the curve
@@ -265,26 +265,26 @@ cumarc = [0;cumsum(chordlen)];
 % The linear interpolant is trivial. do it as a special case
 if method(1) == 'l'
   % The linear method.
-  
+
   % which interval did each point fall in, in
   % terms of t?
   [junk,tbins] = histc(t,cumarc); %#ok
-  
+
   % catch any problems at the ends
   tbins((tbins <= 0) | (t <= 0)) = 1;
   tbins((tbins >= n) | (t >= 1)) = n - 1;
-  
+
   % interpolate
   s = (t - cumarc(tbins))./chordlen(tbins);
   % be nice, and allow the code to work on older releases
   % that don't have bsxfun
   pt = pxy(tbins,:) + (pxy(tbins+1,:) - pxy(tbins,:)).*repmat(s,1,ndim);
-  
+
   % do we need to compute derivatives here?
   if nargout > 1
     dudt = (pxy(tbins+1,:) - pxy(tbins,:))./repmat(chordlen(tbins),1,ndim);
   end
-  
+
   % do we need to create the spline as a piecewise linear function?
   if nargout > 2
     spl = cell(1,ndim);
@@ -292,11 +292,11 @@ if method(1) == 'l'
       coefs = [diff(pxy(:,i))./diff(cumarc),pxy(1:(end-1),i)];
       spl{i} = mkpp(cumarc.',coefs);
     end
-    
+
     %create a function handle for evaluation, passing in the splines
     fofthandle = @(t) foft(t,spl);
   end
-  
+
   % we are done at this point
   return
 end
@@ -331,7 +331,7 @@ for i = 1:ndim
         spl{i}.order = 4;
       end
   end
-  
+
   % and now differentiate them
   xp = spl{i};
   xp.coefs = xp.coefs*diffarray;
@@ -366,7 +366,7 @@ for i = 1:spl{1}.pieces
   for j = 1:ndim
     polyarray(j,:) = spld{j}.coefs(i,:);
   end
-  
+
   % integrate the arclength for the i'th segment
   % using ode45 for the integral. I could have
   % done this part with quad too, but then it
@@ -408,13 +408,13 @@ for i = 1:nt
   % si is the piece of arc length that we will look
   % for in this spline segment.
   si = s(i) - cumseglen(tbins(i));
-  
+
   % extract polynomials for the derivatives
   % in the interval the point lies in
   for j = 1:ndim
     polyarray(j,:) = spld{j}.coefs(tbins(i),:);
   end
-  
+
   % we need to integrate in t, until the integral
   % crosses the specified value of si. Because we
   % have defined totalsplinelength, the lengths will
@@ -423,7 +423,7 @@ for i = 1:nt
   % Start the ode solver at -si, so we will just
   % look for an event where y crosses zero.
   [tout,yout,te,ye] = ode45(@(t,y) segkernel(t,y),[0,chordlen(tbins(i))],-si,opts); %#ok
-  
+
   % we only need that point where a zero crossing occurred
   % if no crossing was found, then we can look at each end.
   if ~isempty(te)
@@ -471,7 +471,7 @@ end
       val = val + polyval(polyarray(k,:),t).^2;
     end
     val = sqrt(val);
-    
+
   end % function segkernel
 
 % ===============================================
@@ -536,17 +536,17 @@ function [str,errorclass] = validstring(arg,valid)
 %        ''  --> No error. An unambiguous match for arg
 %                was found among the choices.
 %
-%        'No match found' --> No match was found among 
+%        'No match found' --> No match was found among
 %                the choices provided in valid.
 %
 %        'Ambiguous argument' --> At least two ambiguous
 %                matches were found among those provided
 %                in valid.
-%        
+%
 %
 % Example:
 %  valid = {'off' 'on' 'The sky is falling'}
-%  
+%
 %
 % See also: parse_pv_pairs, strmatch, strcmpi
 %
@@ -571,4 +571,3 @@ else
 end
 
 end % function validstring
-
