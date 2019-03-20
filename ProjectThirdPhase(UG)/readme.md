@@ -12,8 +12,6 @@ the snakeForce4e).
 
 # Expect Output of `main.m`
 
-MOG of Image:
 ![MOG](U200_mog.jpg)
 
-Force Map of Image:
-![MOG](U200_quiver.jpg)
+![QUIVER](U200_quiver.jpg)
